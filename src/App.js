@@ -1,65 +1,61 @@
+// App.js
 import React, { Component } from 'react';
 import axios from 'axios';
+import './App.css';
+import teamJerseyMap from './teamJerseyMap';
+
 const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playerName: '',
-      playerInfo: null,
-      playerStats: null,
-      gamesPlayed: 0,
-    };
-  }
+  state = {
+    playerName: '',
+    playerInfo: null,
+    playerStats: null,
+    gamesPlayed: 0,
+    currentTeam: null,
+  };
+
+  handleChange = (e) => {
+    this.setState({ playerName: e.target.value });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.playerName.trim()) {
+    const name = this.state.playerName.trim();
+    if (!name) {
       alert('Please enter a player name');
       return;
     }
-    this.getPlayerId();
-  };
-
-  handleChange = (event) => {
-    this.setState({ playerName: event.target.value });
-  };
-
-  getPlayerId = () => {
-    const fullName = this.state.playerName.trim();
-    const [firstNameInput, lastNameInput] = fullName.split(' ');
-
-    if (!lastNameInput) {
-      alert('Please enter full name (e.g., Stephen Curry)');
+    const [first, last] = name.split(' ');
+    if (!last) {
+      alert('Please enter full name (e.g. LeBron James)');
       return;
     }
+    this.getPlayerId(first, last);
+  };
 
+  getPlayerId = (first, last) => {
     axios
-      .get(`https://api-nba-v1.p.rapidapi.com/players?search=${lastNameInput}`, {
+      .get(`https://api-nba-v1.p.rapidapi.com/players?search=${last}`, {
         headers: {
           'X-RapidAPI-Key': apiKey,
           'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com',
         },
       })
-      .then(async (res) => {
-        const players = res.data.response;
-
-        const matchedPlayer = players.find(
-          (p) =>
-            p.firstname.toLowerCase() === firstNameInput.toLowerCase() &&
-            p.lastname.toLowerCase() === lastNameInput.toLowerCase()
+      .then(res => {
+        const match = res.data.response.find(
+          p =>
+            p.firstname.toLowerCase() === first.toLowerCase() &&
+            p.lastname.toLowerCase() === last.toLowerCase()
         );
-
-        if (!matchedPlayer) {
+        if (!match) {
           alert('Player not found. Try again.');
           return;
         }
-
-        this.setState({ playerInfo: matchedPlayer });
-        await this.getPlayerStats(matchedPlayer.id);
+        this.setState({ playerInfo: match });
+        this.getPlayerStats(match.id);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         alert('Error fetching player info');
       });
@@ -67,50 +63,44 @@ class App extends Component {
 
   getPlayerStats = (playerId) => {
     axios
-      .get(`https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerId}&season=2023`, {
-        headers: {
-          'X-RapidAPI-Key': apiKey,
-          'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com',
-        },
-      })
-      .then((res) => {
-        const allGames = res.data.response;
-        const playedGames = allGames.filter((game) => game.min && game.min !== '0');
-
-        if (playedGames.length === 0) {
+      .get(
+        `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerId}&season=2023`,
+        {
+          headers: {
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com',
+          },
+        }
+      )
+      .then(res => {
+        const games = res.data.response.filter(g => g.min && g.min !== '0');
+        if (!games.length) {
           alert('No games found for this player in 2023–2024.');
           return;
         }
 
-        const totals = playedGames.reduce(
-          (acc, game) => {
-            acc.points += game.points || 0;
-            acc.rebounds += game.totReb || 0;
-            acc.assists += game.assists || 0;
-            acc.steals += game.steals || 0;
-            acc.blocks += game.blocks || 0;
-            acc.fgm += game.fgm || 0;
-            acc.fga += game.fga || 0;
-            acc.ftm += game.ftm || 0;
-            acc.fta += game.fta || 0;
-            acc.minutes += parseInt(game.min) || 0;
-            acc.games += 1;
-            return acc;
-          },
-          {
-            points: 0,
-            rebounds: 0,
-            assists: 0,
-            steals: 0,
-            blocks: 0,
-            fgm: 0,
-            fga: 0,
-            ftm: 0,
-            fta: 0,
-            minutes: 0,
-            games: 0,
-          }
-        );
+
+        const { team } = games[0];
+
+        const totals = games.reduce((acc, g) => {
+          acc.points += g.points || 0;
+          acc.rebounds += g.totReb || 0;
+          acc.assists += g.assists || 0;
+          acc.steals += g.steals || 0;
+          acc.blocks += g.blocks || 0;
+          acc.fgm += g.fgm || 0;
+          acc.fga += g.fga || 0;
+          acc.ftm += g.ftm || 0;
+          acc.fta += g.fta || 0;
+          acc.minutes += parseInt(g.min) || 0;
+          acc.games += 1;
+          return acc;
+        }, {
+          points: 0, rebounds: 0, assists: 0, steals: 0,
+          blocks: 0, fgm: 0, fga: 0, ftm: 0, fta: 0,
+          minutes: 0, games: 0
+        });
+
 
         const averages = {
           ppg: (totals.points / totals.games).toFixed(1),
@@ -123,16 +113,29 @@ class App extends Component {
           mpg: (totals.minutes / totals.games).toFixed(1),
         };
 
-        this.setState({ playerStats: averages, gamesPlayed: totals.games });
+
+        this.setState({
+          playerStats: averages,
+          gamesPlayed: totals.games,
+          currentTeam: {
+            id: team.id,
+            name: team.name,
+            nickname: team.nickname,
+            code: team.code,
+            logo: team.logo,
+          },
+        });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         alert('Error fetching stats');
       });
   };
 
   render() {
-    const { playerName, playerStats, gamesPlayed, playerInfo } = this.state;
+    const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
+    const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
+    const jerseyNum = playerInfo?.leagues?.standard?.jersey || '??';
 
     return (
       <div className="App">
@@ -141,7 +144,7 @@ class App extends Component {
             Player Name:&nbsp;
             <input
               type="text"
-              value={playerName}
+              value={this.state.playerName}
               onChange={this.handleChange}
               placeholder="e.g. LeBron James"
             />
@@ -150,9 +153,9 @@ class App extends Component {
         </form>
 
         {playerStats && playerInfo && (
-          <div>
+          <div className="player-container">
             <h2>
-              Stats for {playerInfo.firstname} {playerInfo.lastname} (2023–2024)
+              {playerInfo.firstname} {playerInfo.lastname} — 2023–2024
             </h2>
             <p>Games Played: {gamesPlayed}</p>
             <p>PPG: {playerStats.ppg}</p>
@@ -165,13 +168,42 @@ class App extends Component {
             <p>MPG: {playerStats.mpg}</p>
 
             <hr />
-            <p>Position: {playerInfo.leagues?.standard?.pos || 'N/A'}</p>
-            <p>Jersey: {playerInfo.leagues?.standard?.jersey || 'N/A'}</p>
-            <p>Country: {playerInfo.birth?.country || 'N/A'}</p>
-            <p>Draft Year: {playerInfo.nba?.start || 'N/A'}</p>
-            <p>College: {playerInfo.college || 'N/A'}</p>
-            <p>Height: {playerInfo.height.feets}'{playerInfo.height.inches || ''}</p>
+
+            <p>Position: {playerInfo.leagues.standard.pos}</p>
+            <p>Country: {playerInfo.birth.country}</p>
+            <p>Draft Year: {playerInfo.nba.start}</p>
+            <p>College: {playerInfo.college}</p>
+            <p>
+              Height: {playerInfo.height.feets}'{playerInfo.height.inches}"
+            </p>
             <p>Weight: {playerInfo.weight.pounds} lbs</p>
+
+            {currentTeam && (
+              <>
+                <h3>{currentTeam.name}</h3>
+                <img
+                  src={currentTeam.logo}
+                  alt={`${currentTeam.nickname} logo`}
+                  className="team-logo"
+                />
+              </>
+            )}
+
+            {jerseyData && (
+              <div className="jersey-container">
+                <img
+                  src={`/images/${jerseyData.svg}`}
+                  alt={`${currentTeam.nickname} jersey`}
+                  className="jersey-img"
+                />
+                <div
+                  className="jersey-number"
+                  style={{ color: jerseyData.numberColor }}
+                >
+                  {jerseyNum}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
