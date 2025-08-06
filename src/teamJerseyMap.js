@@ -1,4 +1,3 @@
-// teamJerseyMap.js
 const teamJerseyMap = {
   Raptors:       { svg: 'raptors.svg',       numberColor: '#BE0F34', jerseyColor: 'black' },
   Celtics:       { svg: 'celtics.svg',       numberColor: 'white',  jerseyColor: '#008853' },

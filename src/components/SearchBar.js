@@ -1,4 +1,3 @@
-// components/SearchBar.js
 const SearchBar = ({ value, onChange, onSubmit }) => (
   <form onSubmit={onSubmit} className="search-bar">
     <input

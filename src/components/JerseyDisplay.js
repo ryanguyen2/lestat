@@ -1,4 +1,3 @@
-// components/JerseyDisplay.js
 const JerseyDisplay = ({ svgFile, numberColor, jerseyNumber }) => (
   <div className="jersey-container">
     <img src={`/images/${svgFile}`} alt="jersey" className="jersey-img" />

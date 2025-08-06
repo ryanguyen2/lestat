@@ -1,4 +1,3 @@
-// components/Navbar.js
 const Navbar = () => {
     return (
         <nav className="navbar">

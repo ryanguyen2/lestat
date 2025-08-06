@@ -1,5 +1,3 @@
-// src/components/countryCodeMap.js
-
 const countryCodeMap = {
   "USA": "US",
   "Canada": "CA",

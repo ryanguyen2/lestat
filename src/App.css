@@ -1,43 +1,35 @@
+/* fonts and resets */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  text-decoration: none;
   list-style-type: none;
+  text-decoration: none;
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
   background: #f2f2f2;
-  margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
 }
 
+/* typography */
 h1 {
-  margin-top: 125px;
+  animation: typing 3s steps(22, end) forwards, blink-caret 0.75s step-end infinite;
+  border-right: 0.15em solid white;
   color: white;
+  display: inline-block;
+  font-family: "Montserrat";
   font-size: 50px;
   font-weight: bolder;
-  font-family: "Montserrat";
   letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  margin-top: 125px;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 0.15em solid white;
-  display: inline-block;
-  width: 0; 
-  animation:
-    typing 3s steps(22, end) forwards,
-    blink-caret 0.75s step-end infinite;
-  margin-bottom: 20px;
+  width: 0;
 }
-
-/* .typing-text {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-} */
 
 @keyframes typing {
   from { width: 0 }
@@ -49,182 +41,155 @@ h1 {
   50% { border-color: white }
 }
 
-.search-bar {
-    width: 100%;
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.4);
-    display: flex;
-    align-items: center;
-    border-radius: 60px;
-    padding: 10px 20px;
-    height: 70px;
+/* showcase/hero section */
+.App {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+  width: 100%;
 }
 
-
-.search-bar input[type="text"] {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 15px;
-    padding: 10px;
-    color: white;
+.main-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
 }
 
-::placeholder {
-    color: rgb(231, 231, 231);
-    font-family: "Montserrat";
+.hero-content {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 40%;
+  padding-bottom: 17%;
 }
 
-.search-bar button {
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    background: rgba(53, 54, 43, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-bar button:hover {
-    background-color: #DF8A25;
-}
-
-.search-bar img{
-  width: 25px;
+/* navbar */
+.navbar {
+  align-items: center;
+  background: transparent;
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .navbar a {
   color: white;
-  font-weight: 600;
+  font-family: "Montserrat";
   font-size: 1.05rem;
-  font-family: "Montserrat";
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-.navbar {
-  background-color: #1e1e2f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 80px;
-  width: 100%;
-  background: transparent;
-}
-
-.nav-links{
-  margin-top: 10px;
-}
-
-.logo_icon {
-  width: 28px;
-  height: auto;
-  
-}
-
-.text_logo {
-  cursor: pointer;
-  font-family: "Montserrat";
-  color: #ffff;
-  margin-left: 7%;
-}
-
-.text_logo span {
-  font-family: "Montserrat";
+.navbar a:hover {
   color: #DF8A25;
 }
 
 .nav-links {
   display: flex;
   margin-right: 6%;
+  margin-top: 10px;
 }
 
 .nav-links li {
   margin: 0 20px;
 }
 
-.nav-links a {
-  transition: color 0.3s ease;
+.text_logo {
+  color: #fff;
+  cursor: pointer;
+  font-family: "Montserrat";
+  margin-left: 7%;
 }
 
-.nav-links a:hover {
+.text_logo span {
   color: #DF8A25;
+  font-family: "Montserrat";
 }
 
-.App {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  min-width: 40%;
-  padding-bottom: 17%;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-
-.player-info,
-.stats-card {
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.team-logo {
-  width: 75px;
+.logo_icon {
   height: auto;
-  margin-bottom: 0.4rem;
+  width: 28px;
 }
 
-.jersey-container {
-  position: relative;
-  width: 160px;
-  margin: 1rem auto;
-}
-
-.jersey-img {
+/* search bar */
+.search-bar {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 60px;
+  display: flex;
+  height: 70px;
+  max-width: 700px;
+  padding: 10px 20px;
   width: 100%;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
-.jersey-number {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -40%);
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+.search-bar input[type="text"] {
+  background: transparent;
+  border: none;
+  color: white;
+  flex: 1;
+  font-size: 15px;
+  outline: none;
+  padding: 10px;
 }
 
-.card {
+.search-bar button {
+  align-items: center;
+  background: rgba(53, 54, 43, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  width: 50px;
+}
+
+.search-bar button:hover {
+  background-color: #DF8A25;
+}
+
+.search-bar img {
+  width: 25px;
+}
+
+::placeholder {
+  color: rgb(231, 231, 231);
+  font-family: "Montserrat";
+}
+
+.search-container {
+  margin: 0 auto;
+  max-width: 750px;
   position: relative;
+  width: 100%;
+}
+
+.search-container form {
+  width: 100%;
+}
+
+/* stats card */
+.card {
+  animation: fadeInUp 0.5s ease-out;
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 30%;
   margin: 2rem auto;
   overflow: hidden;
+  padding: 1.5rem;
+  position: relative;
+  width: 30%;
   z-index: 99;
-  animation: fadeInUp 0.5s ease-out;
 }
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -236,52 +201,20 @@ h1 {
   }
 }
 
-
 .card-banner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 130px;
-  width: 100%;
-  z-index: 0;
-  filter: brightness(0.75);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  filter: brightness(0.75);
+  height: 130px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
   z-index: -1;
 }
 
-.player-name{
-  text-align: center;
-  font-size: 2rem;
-}
-
-.player-subheader{
-  font-weight: 300;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  margin-top: 20px;
-  justify-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.meta-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-}
-
-.country-flag{ 
-  width: 70px;
-  height: auto;
-  /* margin-bottom: 0.5rem; */
+.card-content {
+  position: relative;
 }
 
 .stats-card {
@@ -290,51 +223,111 @@ h1 {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 even columns */
   gap: 1.5rem 2rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
   justify-items: center;
+  margin-top: 1.5rem;
 }
 
 .stat-box {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .stat-value {
+  color: #333;
   font-size: 1.8rem;
   font-weight: bold;
-  color: #333;
 }
 
 .stat-label {
-  font-size: 0.9rem;
   color: #777;
+  font-size: 0.9rem;
   margin-top: 0.25rem;
 }
 
-.note{
-  font-style: italic;
-  font-size: 12px;
+/* player info */
+.player-info,
+.stats-card {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.player-name {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.player-subheader {
   font-weight: 300;
-  font-family: 'Montserrat';
-  padding: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* Meta (country and logo grid) */
+.meta-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  justify-items: center;
+  margin: 20px 0 1.5rem;
+}
+
+.meta-item {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  justify-content: center;
+}
+
+.country-flag {
+  height: auto;
+  width: 70px;
+}
+
+.team-logo {
+  height: auto;
+  margin-bottom: 0.4rem;
+  width: 75px;
+}
+
+/* jersey style */
+.jersey-container {
+  margin: 1rem auto;
+  position: relative;
+  width: 160px;
+}
+
+.jersey-img {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  width: 100%;
+}
+
+.jersey-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  left: 50%;
+  position: absolute;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  top: 50%;
+  transform: translate(-50%, -40%);
 }
 
 
+/* redo button and disclaimer note */
 .redo-button {
-  margin-top: 1.5rem;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
   background-color: #DF8A25;
-  color: white;
   border: none;
   border-radius: 25px;
-  cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  padding: 12px 24px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -344,25 +337,35 @@ h1 {
 }
 
 .redo-button:active {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transform: translateY(0);
-   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.note {
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 300;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* error banner */
 .error-banner {
-  background-color: #ff4d4f;
-  position: absolute;
-  top:50%;
-  left: 0;
-  right: 0;
-  color: white;
-  padding: 12px 20px;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 8px;
-  margin: 1rem auto;
-  width: fit-content;
-  max-width: 90%;
   animation: fadeOut 3s forwards;
+  background-color: #ff4d4f;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  left: 0;
+  margin: 1rem auto;
+  max-width: 90%;
+  padding: 12px 20px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%;
+  width: fit-content;
 }
 
 @keyframes fadeOut {
@@ -371,18 +374,18 @@ h1 {
   100% { opacity: 0; }
 }
 
-
+/* footer */
 footer {
   background-color: #DF8A25;
-  text-align: center;
+  margin-top: auto;
   padding: 20px;
+  text-align: center;
   width: 100%;
-  margin-top: auto; 
 }
 
 footer p {
-  font-size: 16px;
   color: black;
+  font-size: 16px;
 }
 
 footer a {

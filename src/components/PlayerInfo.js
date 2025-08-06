@@ -1,4 +1,3 @@
-// src/components/PlayerInfo.js
 import countryCodeMap from './countryCodeMap';
 
 const PlayerInfo = ({ player, team }) => {

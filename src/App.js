@@ -1,4 +1,3 @@
-// src/App.js
 import React, { Component } from 'react';
 import './App.css';
 import teamJerseyMap from './teamJerseyMap';
@@ -130,7 +129,6 @@ class App extends Component {
             games: 0,
           }
         );
-
         const averages = {
           ppg: (totals.points / totals.games).toFixed(1),
           rpg: (totals.rebounds / totals.games).toFixed(1),
@@ -142,7 +140,6 @@ class App extends Component {
           mpg: (totals.minutes / totals.games).toFixed(1),
           plusMinus: totals.plusMinus ? (totals.plusMinus / totals.games).toFixed(1) : 'N/A',
         };
-
         this.setState({
           searchSubmitted: true,
           playerStats: averages,
@@ -179,22 +176,20 @@ class App extends Component {
     return (
       <div className="App" style={backgroundStyle}>
         <Navbar />
-
         <div className="main-content">
           {!searchSubmitted && (
             <div className="hero-content">
               <h1 className="typing-text">nba stats. one search.</h1>
-              
-                <SearchBar
-                  value={playerName}
-                  onChange={this.handleChange}
-                  onSubmit={this.handleSubmit}
-                />
-                {errorMessage && <div className="error-banner">{errorMessage}</div>}
-           
+
+              <SearchBar
+                value={playerName}
+                onChange={this.handleChange}
+                onSubmit={this.handleSubmit}
+              />
+              {errorMessage && <div className="error-banner">{errorMessage}</div>}
+
             </div>
           )}
-
           {searchSubmitted && playerInfo && playerStats && (
             <div className="card">
               <div
@@ -203,7 +198,6 @@ class App extends Component {
                   backgroundColor: jerseyData?.jerseyColor || '#FFA500',
                 }}
               ></div>
-
               <div className="card-content">
                 <div className="jersey-and-meta">
                   {jerseyData && (
@@ -214,10 +208,8 @@ class App extends Component {
                     />
                   )}
                 </div>
-
                 <PlayerInfo player={playerInfo} team={currentTeam} />
                 <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
-
                 <button
                   className="redo-button"
                   onClick={() =>
@@ -238,7 +230,6 @@ class App extends Component {
             </div>
           )}
         </div>
-
         <Footer />
       </div>
     );

@@ -1,4 +1,3 @@
-// src/components/StatsCard.js
 const StatsCard = ({ stats, gamesPlayed }) => {
   return (
     <div className="stats-card">
