@@ -192,15 +192,15 @@ h1 {
 
 
 .player-info,
-.stats-card,
-.team-display {
+.stats-card {
   margin-bottom: 1.5rem;
   text-align: left;
 }
 
 .team-logo {
-  width: 70px;
+  width: 75px;
   height: auto;
+  margin-bottom: 0.4rem;
 }
 
 .jersey-container {
@@ -273,13 +273,14 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 0.9rem;
 }
 
-.team-logo, .country-flag{
+.country-flag{ 
   width: 70px;
   height: auto;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .stats-card {
@@ -339,6 +340,8 @@ h1 {
 
 .error-banner {
   background-color: #ff4d4f;
+  position: absolute;
+  top:50%;
   color: white;
   padding: 12px 20px;
   text-align: center;

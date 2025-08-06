@@ -30,6 +30,7 @@ class App extends Component {
     gamesPlayed: 0,
     currentTeam: null,
     searchSubmitted: false,
+    errorMessage: '',
   };
 
   handleChange = (e) => {
@@ -40,7 +41,13 @@ class App extends Component {
     e.preventDefault();
     const name = this.state.playerName.trim();
     const [first, last] = name.split(' ');
-    if (!last) return alert('Enter full name (e.g., LeBron James)');
+
+    if (!last) {
+      this.setState({ errorMessage: 'Please enter full name (e.g., LeBron James)' });
+      setTimeout(() => this.setState({ errorMessage: '' }), 3000);
+      return;
+    }
+
     this.setState({ searchSubmitted: true });
     this.getPlayerId(first, last);
   };
@@ -59,7 +66,11 @@ class App extends Component {
           p => p.firstname.toLowerCase() === first.toLowerCase() &&
             p.lastname.toLowerCase() === last.toLowerCase()
         );
-        if (!match) return alert('Player not found.');
+        if (!match) {
+          this.setState({ errorMessage: 'Player not found.' });
+          setTimeout(() => this.setState({ errorMessage: '' }), 3000);
+          return;
+        }
         this.setState({ playerInfo: match });
         this.getPlayerStats(match.id);
       })
@@ -77,7 +88,12 @@ class App extends Component {
       .then(res => res.json())
       .then(data => {
         const games = data.response.filter(g => g.min && g.min !== '0');
-        if (!games.length) return alert('No games played this season.');
+        if (!games.length) {
+          this.setState({ errorMessage: 'No games played this season.' });
+          setTimeout(() => this.setState({ errorMessage: '' }), 3000);
+          return;
+        }
+
         const { team } = games[0];
 
         const totals = games.reduce((acc, g) => {
@@ -91,12 +107,12 @@ class App extends Component {
           acc.ftm += g.ftm || 0;
           acc.fta += g.fta || 0;
           acc.minutes += parseInt(g.min) || 0;
+          acc.plusMinus += parseInt(g.plusMinus) || 0;
           acc.games += 1;
-           acc.plusMinus += parseInt(g.plusMinus) || 0;
           return acc;
         }, {
           points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0,
-          fgm: 0, fga: 0, ftm: 0, fta: 0, minutes: 0, games: 0, plusMinus: 0
+          fgm: 0, fga: 0, ftm: 0, fta: 0, minutes: 0, plusMinus: 0, games: 0
         });
 
         const averages = {
@@ -110,7 +126,6 @@ class App extends Component {
           mpg: (totals.minutes / totals.games).toFixed(1),
           plusMinus: totals.plusMinus ? (totals.plusMinus / totals.games).toFixed(1) : 'N/A',
         };
-
 
         this.setState({
           playerStats: averages,
@@ -127,9 +142,8 @@ class App extends Component {
       .catch(err => console.error(err));
   };
 
-
   render() {
-    const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
+    const { playerInfo, playerStats, gamesPlayed, currentTeam, errorMessage } = this.state;
     const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
 
     return (
@@ -145,16 +159,16 @@ class App extends Component {
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
               />
+              {errorMessage && <div className="error-banner">{errorMessage}</div>}
             </div>
           )}
+
 
           {playerInfo && playerStats && (
             <div className="card">
               <div
                 className="card-banner"
-                style={{
-                  backgroundColor: jerseyData?.jerseyColor || '#FFA500',
-                }}
+                style={{ backgroundColor: jerseyData?.jerseyColor || '#FFA500' }}
               ></div>
 
               <div className="card-content">
@@ -163,19 +177,13 @@ class App extends Component {
                     <JerseyDisplay
                       svgFile={jerseyData.svg}
                       numberColor={jerseyData.numberColor}
-                      jerseyNumber={
-                        playerInfo.leagues.standard.jersey || '??'
-                      }
+                      jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
                     />
                   )}
                 </div>
+
                 <PlayerInfo player={playerInfo} team={currentTeam} />
-
-
-                <StatsCard
-                  stats={playerStats}
-                  gamesPlayed={gamesPlayed}
-                />
+                <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
 
                 <button
                   className="redo-button"
@@ -200,11 +208,7 @@ class App extends Component {
         <Footer />
       </div>
     );
-
   }
-
-
-
 }
 
 export default App;
