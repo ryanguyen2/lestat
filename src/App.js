@@ -67,7 +67,7 @@ class App extends Component {
             p.lastname.toLowerCase() === last.toLowerCase()
         );
         if (!match) {
-          this.setState({ errorMessage: 'Player not found.' });
+          this.setState({ errorMessage: 'Player not found. Try a different name.' });
           setTimeout(() => this.setState({ errorMessage: '' }), 3000);
           return;
         }

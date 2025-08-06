@@ -5,7 +5,7 @@ const SearchBar = ({ value, onChange, onSubmit }) => (
       type="text"
       value={value}
       onChange={onChange}
-      placeholder="Enter player name"
+      placeholder="enter player name..."
     />
     <button><img src="/icons/search.svg" Alt="Search"/></button>
   </form>

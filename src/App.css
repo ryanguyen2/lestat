@@ -112,6 +112,10 @@ h1 {
   background: transparent;
 }
 
+.nav-links{
+  margin-top: 10px;
+}
+
 .logo_icon {
   width: 28px;
   height: auto;
