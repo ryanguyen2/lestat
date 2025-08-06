@@ -10,6 +10,7 @@ import TeamDisplay from './components/TeamDisplay';
 import JerseyDisplay from './components/JerseyDisplay';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import countryCodeMap from './components/countryCodeMap';
 
 const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -91,10 +92,11 @@ class App extends Component {
           acc.fta += g.fta || 0;
           acc.minutes += parseInt(g.min) || 0;
           acc.games += 1;
+           acc.plusMinus += parseInt(g.plusMinus) || 0;
           return acc;
         }, {
           points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0,
-          fgm: 0, fga: 0, ftm: 0, fta: 0, minutes: 0, games: 0
+          fgm: 0, fga: 0, ftm: 0, fta: 0, minutes: 0, games: 0, plusMinus: 0
         });
 
         const averages = {
@@ -106,6 +108,7 @@ class App extends Component {
           fg_pct: totals.fga ? ((totals.fgm / totals.fga) * 100).toFixed(1) : 'N/A',
           ft_pct: totals.fta ? ((totals.ftm / totals.fta) * 100).toFixed(1) : 'N/A',
           mpg: (totals.minutes / totals.games).toFixed(1),
+          plusMinus: totals.plusMinus ? (totals.plusMinus / totals.games).toFixed(1) : 'N/A',
         };
 
 
@@ -147,33 +150,49 @@ class App extends Component {
 
           {playerInfo && playerStats && (
             <div className="card">
-              <PlayerInfo player={playerInfo} />
-              <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
-              <TeamDisplay team={currentTeam} />
+              <div
+                className="card-banner"
+                style={{
+                  backgroundColor: jerseyData?.jerseyColor || '#FFA500',
+                }}
+              ></div>
 
-              {jerseyData && (
-                <JerseyDisplay
-                  svgFile={jerseyData.svg}
-                  numberColor={jerseyData.numberColor}
-                  jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
+              <div className="card-content">
+                <div className="jersey-and-meta">
+                  {jerseyData && (
+                    <JerseyDisplay
+                      svgFile={jerseyData.svg}
+                      numberColor={jerseyData.numberColor}
+                      jerseyNumber={
+                        playerInfo.leagues.standard.jersey || '??'
+                      }
+                    />
+                  )}
+                </div>
+                <PlayerInfo player={playerInfo} team={currentTeam} />
+
+
+                <StatsCard
+                  stats={playerStats}
+                  gamesPlayed={gamesPlayed}
                 />
-              )}
 
-              <button
-                className="redo-button"
-                onClick={() =>
-                  this.setState({
-                    searchSubmitted: false,
-                    playerInfo: null,
-                    playerStats: null,
-                    playerName: '',
-                    gamesPlayed: 0,
-                    currentTeam: null,
-                  })
-                }
-              >
-                🔁 Search Again
-              </button>
+                <button
+                  className="redo-button"
+                  onClick={() =>
+                    this.setState({
+                      searchSubmitted: false,
+                      playerInfo: null,
+                      playerStats: null,
+                      playerName: '',
+                      gamesPlayed: 0,
+                      currentTeam: null,
+                    })
+                  }
+                >
+                  🔁 Search Again
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -181,7 +200,9 @@ class App extends Component {
         <Footer />
       </div>
     );
+
   }
+
 
 
 }

@@ -189,13 +189,6 @@ h1 {
   border: 1px solid #ccc;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
 
 .player-info,
 .stats-card,
@@ -218,6 +211,7 @@ h1 {
 
 .jersey-img {
   width: 100%;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
 .jersey-number {
@@ -229,6 +223,100 @@ h1 {
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+
+.card {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin: 2rem auto;
+  overflow: hidden;
+  z-index: 99;
+}
+
+.card-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 130px;
+  width: 100%;
+  z-index: 0;
+  filter: brightness(0.75);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  z-index: -1;
+}
+
+.player-name{
+  text-align: center;
+  font-size: 2rem;
+}
+
+.player-subheader{
+  font-weight: 300;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 20px;
+  justify-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.country-flag{
+  width: 60px;
+}
+.team-logo {
+  width: 70px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.stats-card {
+  margin-top: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 even columns */
+  gap: 1.5rem 2rem;
+  margin-top: 1.5rem;
+  justify-items: center;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.25rem;
+}
+
+
+
 
 footer {
   background-color: #DF8A25;
