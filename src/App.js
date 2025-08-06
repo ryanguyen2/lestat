@@ -123,39 +123,41 @@ class App extends Component {
   };
 
 
-  render() {
-    const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
-    const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
+render() {
+  const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
+  const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
 
-    return (
-      <div className="App">
-        <div className="App" style={backgroundStyle}>
-          <Navbar />
-          <h1>nba stats. one search.</h1>
-          <SearchBar
-            value={this.state.playerName}
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
-          />
-          {playerInfo && playerStats && (
-            <div className="card">
-              <PlayerInfo player={playerInfo} />
-              <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
-              <TeamDisplay team={currentTeam} />
-              {jerseyData && (
-                <JerseyDisplay
-                  svgFile={jerseyData.svg}
-                  numberColor={jerseyData.numberColor}
-                  jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
-                />
-              )}
-            </div>
+  return (
+    <div className="App" style={backgroundStyle}>
+      <Navbar />
+
+      <div className="hero-content">
+        <h1 className="typing-text">nba stats. one search.</h1>
+        <SearchBar
+          value={this.state.playerName}
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        />
+      </div>
+
+      {playerInfo && playerStats && (
+        <div className="card">
+          <PlayerInfo player={playerInfo} />
+          <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
+          <TeamDisplay team={currentTeam} />
+          {jerseyData && (
+            <JerseyDisplay
+              svgFile={jerseyData.svg}
+              numberColor={jerseyData.numberColor}
+              jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
+            />
           )}
         </div>
-        <Footer/>
-      </div>
-    );
-  }
+      )}
+      <Footer />
+    </div>
+  );
+}
 }
 
 export default App;

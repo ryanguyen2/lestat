@@ -23,34 +23,30 @@ h1 {
   font-family: "Montserrat";
   letter-spacing: 0.05em;
   overflow: hidden;
-  border-right: .15em solid white;
   white-space: nowrap;
+  border-right: 0.15em solid white;
+  display: inline-block;
+  width: 0; 
   animation:
-    typing 4s steps(30, end),
-    blink-caret 0.5s step-end infinite;
+    typing 3s steps(22, end) forwards,
+    blink-caret 0.75s step-end infinite;
   margin-bottom: 20px;
 }
 
-@keyframes typing {
-  from {
-    width: 0
-  }
+/* .typing-text {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+} */
 
-  to {
-    width: 33%
-  }
+@keyframes typing {
+  from { width: 0 }
+  to { width: 19ch }
 }
 
 @keyframes blink-caret {
-
-  from,
-  to {
-    border-color: transparent
-  }
-
-  50% {
-    border-color: white
-  }
+  from, to { border-color: transparent }
+  50% { border-color: white }
 }
 
 .search-bar {
@@ -72,6 +68,31 @@ h1 {
     font-size: 15px;
     padding: 10px;
     color: white;
+}
+
+::placeholder {
+    color: rgb(231, 231, 231);
+    font-family: "Montserrat";
+}
+
+.search-bar button {
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background: rgba(53, 54, 43, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button:hover {
+    background-color: #DF8A25;
+}
+
+.search-bar img{
+  width: 25px;
 }
 
 .navbar a {
@@ -128,13 +149,22 @@ h1 {
 .App {
   min-height: 100vh;
   width: 100%;
-  /* background: linear-gradient(rgba(12, 12, 12, 0.8), rgba(12, 12, 12, 0.8)),
-              url('/images/miami.jpg') center 80%/cover no-repeat; */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 40%;
+  padding-bottom: 17%;
+}
+
 
 .search-bar {
   display: flex;
@@ -149,16 +179,6 @@ h1 {
   width: 60%;
   border-radius: 6px;
   border: 1px solid #ccc;
-}
-
-.search-bar button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #007bff;
-  color: white;
-  cursor: pointer;
 }
 
 .card {
