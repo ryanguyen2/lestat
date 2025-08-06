@@ -223,7 +223,19 @@ h1 {
   margin: 2rem auto;
   overflow: hidden;
   z-index: 99;
+  animation: fadeInUp 0.5s ease-out;
 }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .card-banner {
   position: absolute;
@@ -300,6 +312,15 @@ h1 {
   font-size: 0.9rem;
   color: #777;
   margin-top: 0.25rem;
+}
+
+.note{
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 300;
+  font-family: 'Montserrat';
+  padding: 10px;
+  margin-top: 10px;
 }
 
 

@@ -233,6 +233,7 @@ class App extends Component {
                 >
                   Search Again
                 </button>
+                <p className="note">*LeStat accounts for all pre-season, regular season, and playoff games played*</p>
               </div>
             </div>
           )}

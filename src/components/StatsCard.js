@@ -41,6 +41,7 @@ const StatsCard = ({ stats, gamesPlayed }) => {
           <div className="stat-label">+/−pg</div>
         </div>
       </div>
+
     </div>
   );
 };
