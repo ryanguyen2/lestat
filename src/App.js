@@ -28,6 +28,7 @@ class App extends Component {
     playerStats: null,
     gamesPlayed: 0,
     currentTeam: null,
+    searchSubmitted: false,
   };
 
   handleChange = (e) => {
@@ -39,6 +40,7 @@ class App extends Component {
     const name = this.state.playerName.trim();
     const [first, last] = name.split(' ');
     if (!last) return alert('Enter full name (e.g., LeBron James)');
+    this.setState({ searchSubmitted: true });
     this.getPlayerId(first, last);
   };
 
@@ -123,41 +125,65 @@ class App extends Component {
   };
 
 
-render() {
-  const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
-  const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
+  render() {
+    const { playerInfo, playerStats, gamesPlayed, currentTeam } = this.state;
+    const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
 
-  return (
-    <div className="App" style={backgroundStyle}>
-      <Navbar />
+    return (
+      <div className="App" style={backgroundStyle}>
+        <Navbar />
 
-      <div className="hero-content">
-        <h1 className="typing-text">nba stats. one search.</h1>
-        <SearchBar
-          value={this.state.playerName}
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
-      </div>
+        <div className="main-content">
+          {!this.state.searchSubmitted && (
+            <div className="hero-content">
+              <h1 className="typing-text">nba stats. one search.</h1>
+              <SearchBar
+                value={this.state.playerName}
+                onChange={this.handleChange}
+                onSubmit={this.handleSubmit}
+              />
+            </div>
+          )}
 
-      {playerInfo && playerStats && (
-        <div className="card">
-          <PlayerInfo player={playerInfo} />
-          <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
-          <TeamDisplay team={currentTeam} />
-          {jerseyData && (
-            <JerseyDisplay
-              svgFile={jerseyData.svg}
-              numberColor={jerseyData.numberColor}
-              jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
-            />
+          {playerInfo && playerStats && (
+            <div className="card">
+              <PlayerInfo player={playerInfo} />
+              <StatsCard stats={playerStats} gamesPlayed={gamesPlayed} />
+              <TeamDisplay team={currentTeam} />
+
+              {jerseyData && (
+                <JerseyDisplay
+                  svgFile={jerseyData.svg}
+                  numberColor={jerseyData.numberColor}
+                  jerseyNumber={playerInfo.leagues.standard.jersey || '??'}
+                />
+              )}
+
+              <button
+                className="redo-button"
+                onClick={() =>
+                  this.setState({
+                    searchSubmitted: false,
+                    playerInfo: null,
+                    playerStats: null,
+                    playerName: '',
+                    gamesPlayed: 0,
+                    currentTeam: null,
+                  })
+                }
+              >
+                🔁 Search Again
+              </button>
+            </div>
           )}
         </div>
-      )}
-      <Footer />
-    </div>
-  );
-}
+
+        <Footer />
+      </div>
+    );
+  }
+
+
 }
 
 export default App;
