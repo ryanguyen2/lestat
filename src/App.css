@@ -8,10 +8,17 @@
   list-style-type: none;
   text-decoration: none;
 }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
 body {
   background: #f2f2f2;
   font-family: 'Segoe UI', sans-serif;
+
 }
 
 /* typography */
@@ -120,14 +127,15 @@ h1 {
 
 /* search bar */
 .search-bar {
-  align-items: center;
+   align-items: center;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 60px;
   display: flex;
   height: 70px;
-  max-width: 700px;
   padding: 10px 20px;
-  width: 100%;
+  width: 90vw;       
+  max-width: 700px;     
+  margin: 0 auto;  
 }
 
 .search-bar input[type="text"] {
@@ -170,6 +178,7 @@ h1 {
   max-width: 750px;
   position: relative;
   width: 100%;
+  padding: 0 1rem;
 }
 
 .search-container form {
@@ -178,7 +187,6 @@ h1 {
 
 /* stats card */
 .card {
-  animation: fadeInUp 0.5s ease-out;
   background: white;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -186,8 +194,11 @@ h1 {
   overflow: hidden;
   padding: 1.5rem;
   position: relative;
-  width: 30%;
-  z-index: 99;
+  width: 100%;
+  max-width: 550px; /* consistent sizing */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInCard 0.4s ease-out forwards;
 }
 
 @keyframes fadeInUp {
@@ -201,6 +212,13 @@ h1 {
   }
 }
 
+
+@keyframes fadeInCard {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .card-banner {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -396,3 +414,89 @@ footer a {
 footer a:hover {
   color: white;
 }
+
+/* mobile styling */
+
+/* small phones */
+@media (max-width:619px){
+.nav-links{
+  margin-top: 0px;
+  margin-right: -5px;
+}
+.hero-content{
+  transform:scale(0.55);
+  margin-top: -4rem;
+  width: 600px;
+}
+.nav-links,
+.text_logo,
+.logo_icon{
+  transform: scale(0.85);
+}
+.search-bar{
+  width: 100%;
+}
+h1{
+  transform: scale(0.90);
+}
+.footer p{
+  transform: scale(0.85);
+}
+.footer{
+  padding: 10px;
+}
+.card{
+  transform: scale(0.80);
+  width: 90%;
+}
+
+}
+
+/*small tablet styles & landscape phones*/
+@media (min-width: 620px) and (max-width:767px){
+.nav-links{
+  margin-top: 0px;
+}
+.hero-content{
+  transform:scale(0.80);
+  margin-top: -3rem;
+  width: 600px;
+}
+.search-bar{
+  width: 100%;
+}
+.card{
+  transform: scale(0.80);
+  width: 90%;
+}
+}
+
+/*large tablet & small laptop styles*/
+@media (min-width: 768px) and (max-width: 1199px){
+.search-bar{
+  width: 100%;
+}
+.hero-content{
+  width: 700px;
+}
+.card{
+  transform: scale(0.90);
+  width: 60%;
+}
+}
+
+/*laptop & desktop styles*/
+@media (min-width: 1200px) and (max-width: 1600px){
+.hero-content{
+  transform:scale(0.88);
+  width: 700px;
+}
+.search-bar{
+  width: 100%;
+}
+.card{
+  transform: scale(0.90);
+  width: 40%;
+}
+}
+
