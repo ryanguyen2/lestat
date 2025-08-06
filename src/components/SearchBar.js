@@ -6,7 +6,13 @@ const SearchBar = ({ value, onChange, onSubmit }) => (
       onChange={onChange}
       placeholder="enter player name..."
     />
-    <button><img src="/icons/search.svg" Alt="Search"/></button>
+    <button>
+      <img
+        src={`${process.env.PUBLIC_URL}/icons/search.svg`}
+        alt="Search"
+      />
+    </button>
+
   </form>
 );
 export default SearchBar;

@@ -13,11 +13,12 @@ const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
 
 const backgroundStyle = {
   minHeight: '100vh',
-  backgroundImage: `linear-gradient(rgba(12,12,12,0.8), rgba(12,12,12,0.8)), url("/images/miami.jpg")`,
+  backgroundImage: `linear-gradient(rgba(12,12,12,0.8), rgba(12,12,12,0.8)), url("${process.env.PUBLIC_URL}/images/miami.jpg")`,
   backgroundPosition: 'center 80%',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
 };
+
 
 class App extends Component {
   state = {
@@ -179,7 +180,7 @@ class App extends Component {
         <div className="main-content">
           {!searchSubmitted && (
             <div className="hero-content">
-              <h1 className="typing-text">nba stats. one search.</h1>
+              <h1 className="typing-text"><span>nba stats. one search.</span></h1>
 
               <SearchBar
                 value={playerName}

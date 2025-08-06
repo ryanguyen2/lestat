@@ -7,6 +7,7 @@
   padding: 0;
   list-style-type: none;
   text-decoration: none;
+  
 }
 html, body, #root {
   height: 100%;
@@ -22,21 +23,31 @@ body {
 }
 
 /* typography */
-h1 {
-  animation: typing 3s steps(22, end) forwards, blink-caret 0.75s step-end infinite;
-  border-right: 0.15em solid white;
-  color: white;
+.typing-text {
   display: inline-block;
+  color: white;
   font-family: "Montserrat";
   font-size: 50px;
   font-weight: bolder;
   letter-spacing: 0.05em;
-  margin-bottom: 20px;
-  margin-top: 125px;
+  margin-top: 90px;      /* tightened */
+  margin-bottom: 10px;   /* tightened */
   overflow: hidden;
   white-space: nowrap;
+}
+
+
+.typing-text span {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid white;
+  animation:
+    typing 3s steps(22, end) forwards,
+    blink-caret 0.75s step-end infinite;
   width: 0;
 }
+
 
 @keyframes typing {
   from { width: 0 }
@@ -74,6 +85,7 @@ h1 {
   justify-content: center;
   min-width: 40%;
   padding-bottom: 17%;
+  padding-top: 40px; 
 }
 
 /* navbar */
@@ -425,8 +437,8 @@ footer a:hover {
 }
 .hero-content{
   transform:scale(0.55);
-  margin-top: -4rem;
-  width: 600px;
+  margin-top: -5rem;
+ width: 600px; /* instead of 600px */
 }
 .nav-links,
 .text_logo,
@@ -436,9 +448,10 @@ footer a:hover {
 .search-bar{
   width: 100%;
 }
-h1{
-  transform: scale(0.90);
-}
+  .typing-text{
+    font-size: 45px;
+   
+  }
 .footer p{
   transform: scale(0.85);
 }
@@ -478,6 +491,7 @@ h1{
 }
 .hero-content{
   width: 700px;
+  margin-top: -3rem;
 }
 .card{
   transform: scale(0.90);
