@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lestat/static/css/main.463f71cd.css",
+    "main.js": "/lestat/static/js/main.38371624.js",
+    "index.html": "/lestat/index.html",
+    "main.463f71cd.css.map": "/lestat/static/css/main.463f71cd.css.map",
+    "main.38371624.js.map": "/lestat/static/js/main.38371624.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.463f71cd.css",
+    "static/js/main.38371624.js"
+  ]
+}
