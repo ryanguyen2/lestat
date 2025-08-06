@@ -276,10 +276,7 @@ h1 {
   font-size: 0.9rem;
 }
 
-.country-flag{
-  width: 60px;
-}
-.team-logo {
+.team-logo, .country-flag{
   width: 70px;
   height: auto;
   margin-bottom: 0.5rem;
@@ -316,7 +313,29 @@ h1 {
 }
 
 
+.redo-button {
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #DF8A25;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
+.redo-button:hover {
+  background-color: #c6751f;
+  transform: translateY(-2px);
+}
+
+.redo-button:active {
+  transform: translateY(0);
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 
 footer {
   background-color: #DF8A25;

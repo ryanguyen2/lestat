@@ -67,7 +67,7 @@ class App extends Component {
   };
 
   getPlayerStats = (id) => {
-    fetch(`https://api-nba-v1.p.rapidapi.com/players/statistics?id=${id}&season=2023`, {
+    fetch(`https://api-nba-v1.p.rapidapi.com/players/statistics?id=${id}&season=2024`, {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': apiKey,
@@ -190,7 +190,7 @@ class App extends Component {
                     })
                   }
                 >
-                  🔁 Search Again
+                  Search Again
                 </button>
               </div>
             </div>
