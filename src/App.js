@@ -6,11 +6,9 @@ import teamJerseyMap from './teamJerseyMap';
 import SearchBar from './components/SearchBar';
 import PlayerInfo from './components/PlayerInfo';
 import StatsCard from './components/StatsCard';
-import TeamDisplay from './components/TeamDisplay';
 import JerseyDisplay from './components/JerseyDisplay';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import countryCodeMap from './components/countryCodeMap';
 
 const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -48,7 +46,6 @@ class App extends Component {
       return;
     }
 
-    this.setState({ searchSubmitted: true });
     this.getPlayerId(first, last);
   };
 
@@ -63,18 +60,24 @@ class App extends Component {
       .then(res => res.json())
       .then(data => {
         const match = data.response.find(
-          p => p.firstname.toLowerCase() === first.toLowerCase() &&
+          p =>
+            p.firstname.toLowerCase() === first.toLowerCase() &&
             p.lastname.toLowerCase() === last.toLowerCase()
         );
+
         if (!match) {
           this.setState({ errorMessage: 'Player not found. Try a different name.' });
           setTimeout(() => this.setState({ errorMessage: '' }), 3000);
           return;
         }
-        this.setState({ playerInfo: match });
-        this.getPlayerStats(match.id);
+
+        this.setState({ playerInfo: match }, () => this.getPlayerStats(match.id));
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'Error fetching player data.' });
+        setTimeout(() => this.setState({ errorMessage: '' }), 3000);
+      });
   };
 
   getPlayerStats = (id) => {
@@ -89,31 +92,44 @@ class App extends Component {
       .then(data => {
         const games = data.response.filter(g => g.min && g.min !== '0');
         if (!games.length) {
-          this.setState({ errorMessage: 'No games played this season.' });
+          this.setState({ errorMessage: 'This player has no stats for the 2024 season.' });
           setTimeout(() => this.setState({ errorMessage: '' }), 3000);
           return;
         }
 
         const { team } = games[0];
 
-        const totals = games.reduce((acc, g) => {
-          acc.points += g.points || 0;
-          acc.rebounds += g.totReb || 0;
-          acc.assists += g.assists || 0;
-          acc.steals += g.steals || 0;
-          acc.blocks += g.blocks || 0;
-          acc.fgm += g.fgm || 0;
-          acc.fga += g.fga || 0;
-          acc.ftm += g.ftm || 0;
-          acc.fta += g.fta || 0;
-          acc.minutes += parseInt(g.min) || 0;
-          acc.plusMinus += parseInt(g.plusMinus) || 0;
-          acc.games += 1;
-          return acc;
-        }, {
-          points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0,
-          fgm: 0, fga: 0, ftm: 0, fta: 0, minutes: 0, plusMinus: 0, games: 0
-        });
+        const totals = games.reduce(
+          (acc, g) => {
+            acc.points += g.points || 0;
+            acc.rebounds += g.totReb || 0;
+            acc.assists += g.assists || 0;
+            acc.steals += g.steals || 0;
+            acc.blocks += g.blocks || 0;
+            acc.fgm += g.fgm || 0;
+            acc.fga += g.fga || 0;
+            acc.ftm += g.ftm || 0;
+            acc.fta += g.fta || 0;
+            acc.minutes += parseInt(g.min) || 0;
+            acc.plusMinus += parseInt(g.plusMinus) || 0;
+            acc.games += 1;
+            return acc;
+          },
+          {
+            points: 0,
+            rebounds: 0,
+            assists: 0,
+            steals: 0,
+            blocks: 0,
+            fgm: 0,
+            fga: 0,
+            ftm: 0,
+            fta: 0,
+            minutes: 0,
+            plusMinus: 0,
+            games: 0,
+          }
+        );
 
         const averages = {
           ppg: (totals.points / totals.games).toFixed(1),
@@ -128,6 +144,7 @@ class App extends Component {
         };
 
         this.setState({
+          searchSubmitted: true,
           playerStats: averages,
           gamesPlayed: totals.games,
           currentTeam: {
@@ -139,11 +156,24 @@ class App extends Component {
           },
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        this.setState({ errorMessage: 'Error fetching player stats.' });
+        setTimeout(() => this.setState({ errorMessage: '' }), 3000);
+      });
   };
 
   render() {
-    const { playerInfo, playerStats, gamesPlayed, currentTeam, errorMessage } = this.state;
+    const {
+      playerName,
+      playerInfo,
+      playerStats,
+      gamesPlayed,
+      currentTeam,
+      errorMessage,
+      searchSubmitted,
+    } = this.state;
+
     const jerseyData = currentTeam && teamJerseyMap[currentTeam.nickname];
 
     return (
@@ -151,24 +181,27 @@ class App extends Component {
         <Navbar />
 
         <div className="main-content">
-          {!this.state.searchSubmitted && (
+          {!searchSubmitted && (
             <div className="hero-content">
               <h1 className="typing-text">nba stats. one search.</h1>
-              <SearchBar
-                value={this.state.playerName}
-                onChange={this.handleChange}
-                onSubmit={this.handleSubmit}
-              />
-              {errorMessage && <div className="error-banner">{errorMessage}</div>}
+              
+                <SearchBar
+                  value={playerName}
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                />
+                {errorMessage && <div className="error-banner">{errorMessage}</div>}
+           
             </div>
           )}
 
-
-          {playerInfo && playerStats && (
+          {searchSubmitted && playerInfo && playerStats && (
             <div className="card">
               <div
                 className="card-banner"
-                style={{ backgroundColor: jerseyData?.jerseyColor || '#FFA500' }}
+                style={{
+                  backgroundColor: jerseyData?.jerseyColor || '#FFA500',
+                }}
               ></div>
 
               <div className="card-content">
