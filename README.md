@@ -1,7 +1,7 @@
 # 🏀LeStat
 A responsive React app that allows users to search for current NBA players and view their statistics, jersey, team, and more in one stylish card. 
 
-🔗 [Try it out here](https://ryanguyen2.github.io/lestat/)
+🔗 [TRY OUT THE LIVE DEMO HERE](https://ryanguyen2.github.io/lestat/)
 
 ## Languages/Tools
 - **Frontend:** JavaScript(React), HTML, CSS
